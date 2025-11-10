@@ -1,0 +1,11 @@
+name: testplugin
+version: '1.0-SNAPSHOT'
+main: me.sativus.testplugin.Testplugin
+api-version: '1.21'
+commands:
+  register:
+    description: Register user to the server
+    usage: /register <email> <password> <config_password>
+  login:
+    description: Login user to the server
+    usage: /login <password>

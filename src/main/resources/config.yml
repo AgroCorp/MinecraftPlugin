@@ -1,0 +1,13 @@
+database:
+  host: 192.168.2.55
+  port: 3306
+  database: minecraft
+  username: admin
+  password: Gaborka11
+
+email:
+  host: mail.sativus.uk
+  port: 25
+  from: noreply_spigot@sativus.uk
+  username:
+  password:
