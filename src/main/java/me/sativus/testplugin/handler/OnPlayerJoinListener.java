@@ -2,6 +2,8 @@ package me.sativus.testplugin.handler;
 
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.Repository.UserRepository;
+import me.sativus.testplugin.manager.FreezeManager;
+import me.sativus.testplugin.manager.WalletManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

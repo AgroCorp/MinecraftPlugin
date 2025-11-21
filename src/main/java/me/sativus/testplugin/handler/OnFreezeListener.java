@@ -1,5 +1,6 @@
 package me.sativus.testplugin.handler;
 
+import me.sativus.testplugin.manager.FreezeManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -10,7 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class OnFreezeListener implements Listener {

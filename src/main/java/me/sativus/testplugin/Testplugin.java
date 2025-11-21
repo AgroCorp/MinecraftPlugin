@@ -2,6 +2,7 @@ package me.sativus.testplugin;
 
 import me.sativus.testplugin.command.Login;
 import me.sativus.testplugin.command.Register;
+import me.sativus.testplugin.runnable.OnlineTimeRunnable;
 import me.sativus.testplugin.utils.EmailUtil;
 import me.sativus.testplugin.utils.HibernateUtil;
 import me.sativus.testplugin.handler.OnFreezeListener;
@@ -49,6 +50,12 @@ public final class Testplugin extends JavaPlugin {
         getLogger().info("Registering commands...");
         getCommand("register").setExecutor(new Register());
         getCommand("login").setExecutor(new Login());
+
+        // Start runnables
+        getLogger().info("Starting runnables...");
+        Double onlineTimeMoney = getConfig().getDouble("online-time-money");
+        Integer onlineTimeMinutes = getConfig().getInt("online-time-minutes");
+        new OnlineTimeRunnable(this, onlineTimeMoney, onlineTimeMinutes);
     }
 
     @Override

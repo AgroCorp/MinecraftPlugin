@@ -1,4 +1,4 @@
-package me.sativus.testplugin.handler;
+package me.sativus.testplugin.manager;
 
 import java.util.HashSet;
 import java.util.Set;

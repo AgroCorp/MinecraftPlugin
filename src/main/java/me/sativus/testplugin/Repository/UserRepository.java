@@ -15,21 +15,7 @@ import java.util.Optional;
 
 import me.sativus.testplugin.DAO.User;
 
-public class UserRepository {
-
-    public void save(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.merge(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+public class UserRepository extends BaseRepository {
 
     public User findByUUID(UUID uuid) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -98,20 +84,6 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-    public void delete(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.remove(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
         }
     }
 

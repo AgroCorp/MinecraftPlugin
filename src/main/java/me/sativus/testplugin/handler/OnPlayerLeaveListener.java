@@ -2,6 +2,8 @@ package me.sativus.testplugin.handler;
 
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.Repository.UserRepository;
+import me.sativus.testplugin.manager.FreezeManager;
+import me.sativus.testplugin.manager.WalletManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class OnPlayerLeaveListener implements Listener {
     private final FreezeManager freezeManager = FreezeManager.getInstance();
+    private final WalletManager walletManager = WalletManager.getInstance();
     private final JavaPlugin plugin;
     private final UserRepository userRepository = new UserRepository();
 
@@ -26,8 +29,9 @@ public class OnPlayerLeaveListener implements Listener {
             user.setLoggedIn(false);
             userRepository.save(user);
         }
-        
+
         freezeManager.setFrozen(player.getUniqueId(), false);
+        walletManager.removeWallet(player);
 
         plugin.getLogger().info(String.format("Player %s has left the server. Remove from freezed players", player.getName()));
     }
