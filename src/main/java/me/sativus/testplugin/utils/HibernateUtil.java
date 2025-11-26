@@ -2,7 +2,9 @@ package me.sativus.testplugin.utils;
 
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.DAO.Wallet;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
@@ -55,5 +57,29 @@ public class HibernateUtil {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
+    }
+
+    public static <T> T executeTransaction(SessionFactory sessionFactory, TransactionalFunction<T> function) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            T result = function.apply(session);
+            transaction.commit();
+            return result;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
+    @FunctionalInterface
+    public interface TransactionalFunction<T> {
+        T apply(Session session) throws Exception;
     }
 }

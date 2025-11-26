@@ -10,15 +10,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class OnlineTimeRunnable extends BukkitRunnable {
     private final Plugin plugin;
     private final double onlineMoney;
-    private final int onlineMinutes;
     private final UserRepository userRepository = new UserRepository();
     private final WalletManager walletManager = WalletManager.getInstance();
 
     public OnlineTimeRunnable(Plugin plugin, double onlineMoney, int onlineTimeMinutes) {
         this.plugin = plugin;
         this.onlineMoney = onlineMoney;
-        this.onlineMinutes = onlineTimeMinutes;
-        runTaskTimer(plugin, 0L, this.onlineMinutes * 60 * 20);
+        runTaskTimer(plugin, 0L, (long) onlineTimeMinutes * 60 * 20);
     }
 
     @Override

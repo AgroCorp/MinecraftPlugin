@@ -1,39 +1,21 @@
 package me.sativus.testplugin.Repository;
 
-import me.sativus.testplugin.DAO.User;
-import me.sativus.testplugin.DAO.Wallet;
 import me.sativus.testplugin.utils.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.util.UUID;
+import static me.sativus.testplugin.utils.HibernateUtil.executeTransaction;
 
 public class BaseRepository {
     public <T> void save(T model) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        executeTransaction(HibernateUtil.getSessionFactory(), session -> {
             session.merge(model);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
+            return null;
+        });
     }
 
     public <T> void delete(T model) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        executeTransaction(HibernateUtil.getSessionFactory(), session -> {
             session.remove(model);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
+            return null;
+        });
     }
 }
