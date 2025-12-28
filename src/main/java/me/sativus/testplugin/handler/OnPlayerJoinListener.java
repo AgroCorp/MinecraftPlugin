@@ -3,6 +3,7 @@ package me.sativus.testplugin.handler;
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.Repository.UserRepository;
 import me.sativus.testplugin.manager.FreezeManager;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,8 +24,7 @@ public class OnPlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         User user = userRepository.getOrCreate(player.getUniqueId(), player.getName());
 
-        // TODO: negate this if when finish testing
-        if (player.isOp()) {
+        if (!player.isOp()) {
             freezeManager.setFrozen(player.getUniqueId(), true);
             plugin.getLogger().info(String.format("Player %s has joined the server. Add to freezed players", player.getName()));
             player.setVisibleByDefault(false);

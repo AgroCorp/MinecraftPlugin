@@ -2,7 +2,7 @@ name: testplugin
 description: Paper Test Plugin
 version: '1.0-SNAPSHOT'
 main: me.sativus.testplugin.Testplugin
-api-version: '1.21.11'
+api-version: '1.21'
 commands:
   register:
     description: Register user to the server
@@ -10,3 +10,15 @@ commands:
   login:
     description: Login user to the server
     usage: /login <password>
+  balance:
+    description: Check your balance
+    usage: /balance
+  reload:
+    description: Reload the plugin configuration
+    usage: /reload
+  freeze:
+    description: Freeze time or weather in all worlds
+    usage: /freeze <time|weather> <value>
+  unfreeze:
+    description: Unfreeze time or weather in all worlds
+    usage: /unfreeze <time|weather>

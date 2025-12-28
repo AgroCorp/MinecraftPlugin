@@ -23,7 +23,7 @@ public class WalletManager {
     }
 
     public void deposit(Player player, double amount) {
-        if (wallets.get(player.getUniqueId()) == null) {
+        if (wallets.get(player.getUniqueId()) != null) {
             double current = wallets.get(player.getUniqueId()).getBalance();
             wallets.get(player.getUniqueId()).setBalance(current + amount);
         }
@@ -37,11 +37,31 @@ public class WalletManager {
     }
 
     public void addWallet(Player player, Wallet wallet) {
-        wallets.put(player.getUniqueId(), wallet);
+        if (!wallets.containsKey(player.getUniqueId())) {
+            wallets.put(player.getUniqueId(), wallet);
+        }
     }
 
     public void removeWallet(Player player) {
         walletRepository.save(wallets.get(player.getUniqueId()));
         wallets.remove(player.getUniqueId());
+    }
+
+    private void removeWallet(UUID playerId) {
+        walletRepository.save(wallets.get(playerId));
+        wallets.remove(playerId);
+    }
+
+    public double getBalance(Player player) {
+        if (wallets.get(player.getUniqueId()) != null) {
+            return wallets.get(player.getUniqueId()).getBalance();
+        }
+        return 0;
+    }
+
+    public void removeAllWallets() {
+        for (UUID playerId : wallets.keySet()) {
+            removeWallet(playerId);
+        }
     }
 }

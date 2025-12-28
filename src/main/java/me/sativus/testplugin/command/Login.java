@@ -6,14 +6,13 @@ import me.sativus.testplugin.manager.FreezeManager;
 import me.sativus.testplugin.manager.WalletManager;
 import me.sativus.testplugin.utils.BCryptUtil;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class Login implements CommandExecutor {
+public class Login extends BaseCommand {
     private final UserRepository userRepository = new UserRepository();
     private final WalletManager walletManager = WalletManager.getInstance();
     private final FreezeManager freezeManager = FreezeManager.getInstance();
@@ -29,12 +28,14 @@ public class Login implements CommandExecutor {
             Player player = (Player) commandSender;
             User user = userRepository.findByUUIDWithWallet(player.getUniqueId());
 
-            System.out.println(user);
             if (user != null && user.getPassword() != null) {
-                System.out.println(strings[0]);
+                if (user.getLoggedIn()) {
+                    player.sendMessage("You are already logged in.");
+                    return true;
+                }
 
                 if (BCryptUtil.checkPassword(strings[0], user.getPassword())) {
-                    System.out.println("Password matches.");
+                    this.plugin.getLogger().info(String.format("Player %s has logged in.", player.getName()));
                     player.sendMessage("Login successful.");
                     freezeManager.setFrozen(player.getUniqueId(), false);
 

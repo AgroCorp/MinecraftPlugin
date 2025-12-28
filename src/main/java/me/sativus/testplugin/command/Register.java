@@ -5,13 +5,12 @@ import me.sativus.testplugin.Repository.UserRepository;
 import me.sativus.testplugin.utils.BCryptUtil;
 import me.sativus.testplugin.utils.EmailUtil;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.regex.Pattern;
 
-public class Register implements CommandExecutor {
+public class Register extends BaseCommand {
     private final UserRepository userRepository = new UserRepository();
 
     @Override
