@@ -1,7 +1,8 @@
 name: testplugin
+description: Paper Test Plugin
 version: '1.0-SNAPSHOT'
 main: me.sativus.testplugin.Testplugin
-api-version: '1.21'
+api-version: '1.21.11'
 commands:
   register:
     description: Register user to the server

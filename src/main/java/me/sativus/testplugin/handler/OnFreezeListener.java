@@ -5,11 +5,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import io.papermc.paper.event.player.AsyncChatEvent;
 
 import java.util.Set;
 
@@ -71,7 +72,7 @@ public class OnFreezeListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onPlayerChat(AsyncChatEvent event) {
         if (freezeManager.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             event.getPlayer().sendMessage("You cannot chat while frozen.");

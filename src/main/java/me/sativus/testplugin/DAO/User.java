@@ -2,7 +2,6 @@ package me.sativus.testplugin.DAO;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

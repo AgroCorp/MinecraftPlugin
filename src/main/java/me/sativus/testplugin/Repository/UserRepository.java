@@ -6,7 +6,6 @@ import jakarta.persistence.criteria.Root;
 import me.sativus.testplugin.DAO.Wallet;
 import me.sativus.testplugin.utils.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;

@@ -2,7 +2,6 @@ package me.sativus.testplugin.command;
 
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.Repository.UserRepository;
-import me.sativus.testplugin.Repository.WalletRepository;
 import me.sativus.testplugin.manager.FreezeManager;
 import me.sativus.testplugin.manager.WalletManager;
 import me.sativus.testplugin.utils.BCryptUtil;

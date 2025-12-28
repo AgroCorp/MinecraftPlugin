@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "yaml.schemas": {
+        "https://www.schemastore.org/paper-plugin.json": "file:///Users/gaborka98/IdeaProjects/testplugin/src/main/resources/plugin.yml"
+    }
+}
