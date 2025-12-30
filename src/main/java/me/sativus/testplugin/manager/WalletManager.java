@@ -29,11 +29,15 @@ public class WalletManager {
         }
     }
 
-    public void withdraw(Player player, double amount) {
-        if (wallets.get(player.getUniqueId()) == null) {
-            double current = wallets.get(player.getUniqueId()).getBalance();
-            wallets.get(player.getUniqueId()).setBalance(current - amount);
+    public boolean withdraw(Player player, double amount) {
+        if (wallets.containsKey(player.getUniqueId())) {
+            if (wallets.get(player.getUniqueId()).getBalance() >= amount) {
+                double current = wallets.get(player.getUniqueId()).getBalance();
+                wallets.get(player.getUniqueId()).setBalance(current - amount);
+                return true;
+            }
         }
+        return false;
     }
 
     public void addWallet(Player player, Wallet wallet) {

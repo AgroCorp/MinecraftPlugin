@@ -27,7 +27,7 @@ commands:
     permission: testplugin.unfreeze
 
 permissions:
-  testplugin.balance.get:
+  testplugin.balance.get.others:
     description: Allows the user to get other players' balances
     default: op
   testplugin.balance.set:
