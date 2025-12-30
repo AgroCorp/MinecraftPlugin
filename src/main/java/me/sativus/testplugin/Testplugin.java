@@ -1,13 +1,13 @@
 package me.sativus.testplugin;
 
-import me.sativus.testplugin.command.Login;
+import me.sativus.testplugin.command.LoginCommand;
 import me.sativus.testplugin.DAO.User;
 import me.sativus.testplugin.Repository.UserRepository;
-import me.sativus.testplugin.command.Balance;
-import me.sativus.testplugin.command.Freeze;
-import me.sativus.testplugin.command.Register;
-import me.sativus.testplugin.command.Reload;
-import me.sativus.testplugin.command.Unfreeze;
+import me.sativus.testplugin.command.BalanceCommand;
+import me.sativus.testplugin.command.FreezeCommand;
+import me.sativus.testplugin.command.RegisterCommand;
+import me.sativus.testplugin.command.ReloadCommand;
+import me.sativus.testplugin.command.UnfreezeCommand;
 import me.sativus.testplugin.runnable.OnlineTimeRunnable;
 import me.sativus.testplugin.utils.EmailUtil;
 import me.sativus.testplugin.utils.HibernateUtil;
@@ -19,6 +19,8 @@ import me.sativus.testplugin.manager.WalletManager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 public final class Testplugin extends JavaPlugin {
     WalletManager walletManager = WalletManager.getInstance();
@@ -33,14 +35,15 @@ public final class Testplugin extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         reloadConfigValues();
-        
+
         // Create database connection
         getLogger().info("Initializing database connection...");
         HibernateUtil.initialize(Config.host, Config.port, Config.database, Config.username, Config.password);
 
         // Initialize emailService
         getLogger().info("Initializing emailService...");
-        EmailUtil.initializeEmailUtil(Config.emailHost, Config.emailPort, Config.emailUsername, Config.emailPassword, Config.emailFrom);
+        EmailUtil.initializeEmailUtil(Config.emailHost, Config.emailPort, Config.emailUsername, Config.emailPassword,
+                Config.emailFrom);
 
         // Register listeners
         getLogger().info("Registering listeners...");
@@ -50,14 +53,15 @@ public final class Testplugin extends JavaPlugin {
 
         // Register commands
         getLogger().info("Registering commands...");
-        getCommand("register").setExecutor(new Register());
-        getCommand("login").setExecutor(new Login());
-        getCommand("balance").setExecutor(new Balance());
-        getCommand("reload").setExecutor(new Reload());
-        getCommand("freeze").setExecutor(new Freeze());
-        getCommand("unfreeze").setExecutor(new Unfreeze());
+        getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            commands.registrar().register(new LoginCommand().createCommand("login"));
+            commands.registrar().register(new RegisterCommand().createCommand("register"));
+            commands.registrar().register(new BalanceCommand().createCommand("balance"));
+            commands.registrar().register(new FreezeCommand().createCommand("freeze"));
+            commands.registrar().register(new UnfreezeCommand().createCommand("unfreeze"));
+            commands.registrar().register(new ReloadCommand().createCommand("reload"));
+        });
 
-        
         // Start runnables
         getLogger().info("Starting runnables...");
         new OnlineTimeRunnable(this);

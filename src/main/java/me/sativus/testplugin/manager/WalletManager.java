@@ -43,8 +43,10 @@ public class WalletManager {
     }
 
     public void removeWallet(Player player) {
-        walletRepository.save(wallets.get(player.getUniqueId()));
-        wallets.remove(player.getUniqueId());
+        if (wallets.containsKey(player.getUniqueId())) {
+            walletRepository.save(wallets.get(player.getUniqueId()));
+            wallets.remove(player.getUniqueId());
+        }
     }
 
     private void removeWallet(UUID playerId) {
@@ -57,6 +59,12 @@ public class WalletManager {
             return wallets.get(player.getUniqueId()).getBalance();
         }
         return 0;
+    }
+
+    public void setBalance(Player player, double amount) {
+        if (wallets.containsKey(player.getUniqueId())) {
+            wallets.get(player.getUniqueId()).setBalance(amount);
+        }
     }
 
     public void removeAllWallets() {

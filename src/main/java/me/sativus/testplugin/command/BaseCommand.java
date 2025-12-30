@@ -1,13 +1,20 @@
 package me.sativus.testplugin.command;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
+import org.jspecify.annotations.NullMarked;
 
+import com.mojang.brigadier.tree.LiteralCommandNode;
+
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.sativus.testplugin.Testplugin;
 
-public abstract class BaseCommand implements CommandExecutor{
+@NullMarked
+public abstract class BaseCommand {
     Testplugin plugin;
+
     public BaseCommand() {
-        this.plugin = (Testplugin) Bukkit.getPluginManager().getPlugin("Testplugin");
+        this.plugin = (Testplugin) Bukkit.getPluginManager().getPlugin("testplugin");
     }
+
+    public abstract LiteralCommandNode<CommandSourceStack> createCommand(final String commandName);
 }

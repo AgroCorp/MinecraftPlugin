@@ -16,9 +16,30 @@ commands:
   reload:
     description: Reload the plugin configuration
     usage: /reload
+    permission: testplugin.reload
   freeze:
     description: Freeze time or weather in all worlds
     usage: /freeze <time|weather> <value>
+    permission: testplugin.freeze
   unfreeze:
     description: Unfreeze time or weather in all worlds
     usage: /unfreeze <time|weather>
+    permission: testplugin.unfreeze
+
+permissions:
+  testplugin.balance.get:
+    description: Allows the user to get other players' balances
+    default: op
+  testplugin.balance.set:
+    description: Allows the user to set other players' balances
+    default: op
+  testplugin.reload:
+    description: Allows the user to reload the plugin configuration
+    default: op
+  testplugin.freeze:
+    description: Allows the user to freeze time or weather
+    default: op
+  testplugin.unfreeze:
+    description: Allows the user to unfreeze time or weather
+    default: op
+default-permission: false
