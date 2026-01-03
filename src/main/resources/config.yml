@@ -14,3 +14,32 @@ email:
   from: noreply_spigot@sativus.uk
   username: ubuntu
   password: Gaborka11
+
+
+jobs:
+  miner:
+    enabled: true
+    pay-per-block:
+      coal_ore: 0.5
+      iron_ore: 1.0
+      gold_ore: 2.0
+      diamond_ore: 5.0
+      emerald_ore: 7.0
+  lumberjack:
+    enabled: true
+    pay-per-block:
+      oak_log: 0.5
+      birch_log: 0.5
+      spruce_log: 0.5
+      jungle_log: 0.5
+      acacia_log: 0.5
+      dark_oak_log: 0.5
+  farmer:
+    enabled: true
+    pay-per-block:
+      wheat: 0.2
+      carrot: 0.2
+      potato: 0.2
+      beetroot: 0.2
+      pumpkin: 1.0
+      melon: 1.0

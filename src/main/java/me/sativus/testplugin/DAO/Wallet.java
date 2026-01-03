@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Wallet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne(fetch = FetchType.LAZY)

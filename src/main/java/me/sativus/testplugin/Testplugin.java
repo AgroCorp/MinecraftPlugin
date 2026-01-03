@@ -1,7 +1,10 @@
 package me.sativus.testplugin;
 
 import me.sativus.testplugin.command.LoginCommand;
+import me.sativus.testplugin.DAO.Job;
+import me.sativus.testplugin.DAO.Salary;
 import me.sativus.testplugin.DAO.User;
+import me.sativus.testplugin.Repository.JobRepository;
 import me.sativus.testplugin.Repository.UserRepository;
 import me.sativus.testplugin.command.BalanceCommand;
 import me.sativus.testplugin.command.FreezeCommand;
@@ -17,6 +20,9 @@ import me.sativus.testplugin.handler.OnPlayerJoinListener;
 import me.sativus.testplugin.handler.OnPlayerLeaveListener;
 import me.sativus.testplugin.manager.WalletManager;
 
+import java.util.ArrayList;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,6 +50,10 @@ public final class Testplugin extends JavaPlugin {
         getLogger().info("Initializing emailService...");
         EmailUtil.initializeEmailUtil(Config.emailHost, Config.emailPort, Config.emailUsername, Config.emailPassword,
                 Config.emailFrom);
+
+        // Create initial jobs into database
+        getLogger().info("Create jobs config into database");
+        generateDefaultJobs();
 
         // Register listeners
         getLogger().info("Registering listeners...");
@@ -113,5 +123,40 @@ public final class Testplugin extends JavaPlugin {
 
         Config.onlineTimeMoney = getConfig().getDouble("online-time-money");
         Config.onlineTimeMinutes = getConfig().getInt("online-time-minutes");
+    }
+
+    private void generateDefaultJobs() {
+        // Miner
+        Job miner = new Job("miner");
+        ArrayList<Salary> minerSalaries = new ArrayList<>() {
+            {
+                add(new Salary(Material.COAL_BLOCK.name(), 0.5));
+                add(new Salary(Material.IRON_ORE.name(), 1.0));
+                add(new Salary(Material.GOLD_ORE.name(), 2.0));
+                add(new Salary(Material.DIAMOND_ORE.name(), 5.0));
+                add(new Salary(Material.EMERALD_ORE.name(), 7.0));
+
+            }
+        };
+        miner.setSalaries(minerSalaries);
+
+        // Lumberjack
+        Job lumberjack = new Job("lumberjack");
+        ArrayList<Salary> lumberjackSalaries = new ArrayList<>() {
+            {
+                add(new Salary(Material.OAK_LOG.name(), 0.5));
+                add(new Salary(Material.BIRCH_LOG.name(), 0.5));
+                add(new Salary(Material.SPRUCE_LOG.name(), 0.5));
+                add(new Salary(Material.JUNGLE_LOG.name(), 0.5));
+                add(new Salary(Material.ACACIA_LOG.name(), 0.5));
+                add(new Salary(Material.DARK_OAK_LOG.name(), 0.5));
+            }
+        };
+        lumberjack.setSalaries(lumberjackSalaries);
+
+        JobRepository jobRepository = new JobRepository();
+        jobRepository.save(miner);
+        jobRepository.save(lumberjack);
+
     }
 }

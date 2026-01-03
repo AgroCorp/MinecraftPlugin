@@ -14,7 +14,10 @@ import java.util.Optional;
 
 import me.sativus.testplugin.DAO.User;
 
-public class UserRepository extends BaseRepository {
+public class UserRepository extends BaseRepository<User> {
+    public UserRepository() {
+        super(User.class);
+    }
 
     public User findByUUID(UUID uuid) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -34,15 +37,6 @@ public class UserRepository extends BaseRepository {
 
     public Optional<User> findByUUIDOptional(UUID uuid) {
         return Optional.ofNullable(findByUUID(uuid));
-    }
-
-    public User findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.find(User.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     // Fetch user with wallets eagerly loaded
