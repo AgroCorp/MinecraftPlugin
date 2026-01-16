@@ -20,7 +20,7 @@ public class OnlineTimeRunnable extends BukkitRunnable {
     @Override
     public void run() {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            plugin.getLogger().info("Adding online time money to player: " + player.getName());
+            plugin.getLogger().fine("Adding online time money to player: " + player.getName());
             walletManager.deposit(player, Config.onlineTimeMoney);
         }
     }
