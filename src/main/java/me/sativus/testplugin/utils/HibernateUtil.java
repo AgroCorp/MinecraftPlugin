@@ -1,7 +1,6 @@
 package me.sativus.testplugin.utils;
 
-import me.sativus.testplugin.DAO.User;
-import me.sativus.testplugin.DAO.Wallet;
+import me.sativus.testplugin.DAO.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,7 +10,7 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
     public static void initialize(String host, int port, String database,
-                                  String username, String password) {
+            String username, String password) {
         try {
             Configuration configuration = new Configuration();
 
@@ -42,6 +41,8 @@ public class HibernateUtil {
             // Register your entity classes here
             configuration.addAnnotatedClass(User.class);
             configuration.addAnnotatedClass(Wallet.class);
+            configuration.addAnnotatedClass(Job.class);
+            configuration.addAnnotatedClass(Salary.class);
 
             sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {

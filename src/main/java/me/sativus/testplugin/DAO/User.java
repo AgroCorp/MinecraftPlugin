@@ -19,8 +19,13 @@ public class User {
     @Column
     private LocalDateTime lastLogin;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "wallet_id")
     private Wallet wallet;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "job_id")
+    private Job job;
 
     public User() {
     }
@@ -84,6 +89,14 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
+    public Job getJob() {
+        return this.job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -95,4 +108,3 @@ public class User {
                 '}';
     }
 }
-

@@ -9,8 +9,8 @@ database:
   password: Gaborka11
 
 email:
-  host: mail.sativus.uk
-  port: 587
+  host: 192.168.2.55
+  port: 25
   from: noreply_spigot@sativus.uk
   username: ubuntu
   password: Gaborka11

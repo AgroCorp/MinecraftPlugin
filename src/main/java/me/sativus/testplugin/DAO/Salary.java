@@ -20,7 +20,7 @@ public class Salary {
     @Column
     Double salary;
 
-    @ManyToOne(targetEntity = Job.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Job.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "job_id", nullable = false)
     Job job;
 

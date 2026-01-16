@@ -1,8 +1,10 @@
 # JOB
-- [ ] Add init config to create a database
-- [ ] Implement BlockBreak handler to check block types and add money
+- [x] Add init config to create a database
+    - [x] init static code inserts
+    - [ ] implement init logic about default config
+- [x] Implement BlockBreak handler to check block types and add money
 - [ ] Add job command
-    - [ ] Join command
+    - [x] Join command
     - [ ] Leave command
-    - [ ] List command
+    - [x] List command
     - [ ] Info command (job description)

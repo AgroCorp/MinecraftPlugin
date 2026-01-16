@@ -8,8 +8,7 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_uuid", unique = true, nullable = false)
+    @OneToOne(mappedBy = "wallet", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @Column

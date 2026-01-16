@@ -39,18 +39,19 @@ public class UserRepository extends BaseRepository<User> {
         return Optional.ofNullable(findByUUID(uuid));
     }
 
-    // Fetch user with wallets eagerly loaded
-    public User findByUUIDWithWallet(UUID uuid) {
+    // Fetch user with comma separated entity list
+    public User findByUUIDWithFetch(UUID uuid, String commaseparatedFetch) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cr = cb.createQuery(User.class);
             Root<User> root = cr.from(User.class);
-            root.fetch("wallet");
+
+            for (String fetch : commaseparatedFetch.split(",")) {
+                root.fetch(fetch);
+            }
 
             cr.select(root).where(cb.equal(root.get("uuid"), uuid.toString()));
-
             List<User> results = session.createQuery(cr).getResultList();
-
             return results.isEmpty() ? null : results.getFirst();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,6 +85,7 @@ public class UserRepository extends BaseRepository<User> {
         User user = findByUUID(uuid);
         if (user == null) {
             Wallet wallet = new Wallet();
+
             user = new User(uuid, playerName, wallet);
             wallet.setUser(user);
             save(user);

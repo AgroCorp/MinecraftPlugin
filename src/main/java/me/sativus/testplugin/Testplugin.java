@@ -8,6 +8,7 @@ import me.sativus.testplugin.Repository.JobRepository;
 import me.sativus.testplugin.Repository.UserRepository;
 import me.sativus.testplugin.command.BalanceCommand;
 import me.sativus.testplugin.command.FreezeCommand;
+import me.sativus.testplugin.command.JobCommand;
 import me.sativus.testplugin.command.RegisterCommand;
 import me.sativus.testplugin.command.ReloadCommand;
 import me.sativus.testplugin.command.UnfreezeCommand;
@@ -15,6 +16,7 @@ import me.sativus.testplugin.runnable.OnlineTimeRunnable;
 import me.sativus.testplugin.utils.EmailUtil;
 import me.sativus.testplugin.utils.HibernateUtil;
 import me.sativus.testplugin.utils.Config;
+import me.sativus.testplugin.handler.OnBreakBlock;
 import me.sativus.testplugin.handler.OnFreezeListener;
 import me.sativus.testplugin.handler.OnPlayerJoinListener;
 import me.sativus.testplugin.handler.OnPlayerLeaveListener;
@@ -60,6 +62,7 @@ public final class Testplugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnPlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new OnPlayerLeaveListener(this), this);
         getServer().getPluginManager().registerEvents(new OnFreezeListener(this), this);
+        getServer().getPluginManager().registerEvents(new OnBreakBlock(), this);
 
         // Register commands
         getLogger().info("Registering commands...");
@@ -70,6 +73,7 @@ public final class Testplugin extends JavaPlugin {
             commands.registrar().register(new FreezeCommand().createCommand("freeze"));
             commands.registrar().register(new UnfreezeCommand().createCommand("unfreeze"));
             commands.registrar().register(new ReloadCommand().createCommand("reload"));
+            commands.registrar().register(new JobCommand().createCommand("job"));
         });
 
         // Start runnables
@@ -127,6 +131,7 @@ public final class Testplugin extends JavaPlugin {
 
     private void generateDefaultJobs() {
         // Miner
+
         Job miner = new Job("miner");
         ArrayList<Salary> minerSalaries = new ArrayList<>() {
             {
@@ -139,6 +144,10 @@ public final class Testplugin extends JavaPlugin {
             }
         };
         miner.setSalaries(minerSalaries);
+
+        for (Salary salary : minerSalaries) {
+            salary.setJob(miner);
+        }
 
         // Lumberjack
         Job lumberjack = new Job("lumberjack");
@@ -154,9 +163,13 @@ public final class Testplugin extends JavaPlugin {
         };
         lumberjack.setSalaries(lumberjackSalaries);
 
+        for (Salary salary : lumberjackSalaries) {
+            salary.setJob(lumberjack);
+        }
+
         JobRepository jobRepository = new JobRepository();
-        jobRepository.save(miner);
-        jobRepository.save(lumberjack);
+        jobRepository.getOrCreate(miner);
+        jobRepository.getOrCreate(lumberjack);
 
     }
 }

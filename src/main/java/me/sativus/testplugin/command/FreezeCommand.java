@@ -22,12 +22,13 @@ public class FreezeCommand extends BaseCommand {
                 .requires(sender -> sender.getSender() instanceof Player
                         && sender.getSender().hasPermission("testplugin.unfreeze"))
                 .then(Commands.literal("time")
-                        .then(Commands.argument("subtype", StringArgumentType.word()).suggests((ctx, builder) -> {
-                            for (Daytimes dt : Daytimes.values()) {
-                                builder.suggest(dt.name().toLowerCase());
-                            }
-                            return builder.buildFuture();
-                        })
+                        .then(Commands.argument("subtype", StringArgumentType.word())
+                                .suggests((ctx, builder) -> {
+                                    for (Daytimes dt : Daytimes.values()) {
+                                        builder.suggest(dt.name().toLowerCase());
+                                    }
+                                    return builder.buildFuture();
+                                })
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getSender();
                                     String subtype = StringArgumentType.getString(ctx, "subtype");

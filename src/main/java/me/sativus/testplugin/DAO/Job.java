@@ -2,24 +2,31 @@ package me.sativus.testplugin.DAO;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+@Entity
 public class Job {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
+    @Column(unique = true)
+    private String name;
 
     @Column
-    String name;
+    private Boolean enabled = true;
 
-    @Column
-    Boolean enabled;
+    @OneToMany(mappedBy = "job", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Salary> salaries;
 
-    @OneToMany(mappedBy = "job", orphanRemoval = true, cascade = jakarta.persistence.CascadeType.ALL)
-    List<Salary> salaries;
+    @OneToMany(mappedBy = "job", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<User> users;
 
     // utils
     public void addSalary(Salary salary) {
@@ -72,6 +79,10 @@ public class Job {
 
     public List<Salary> getSalaries() {
         return this.salaries;
+    }
+
+    public List<User> getUsers() {
+        return this.users;
     }
 
 }

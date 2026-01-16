@@ -25,6 +25,10 @@ commands:
     description: Unfreeze time or weather in all worlds
     usage: /unfreeze <time|weather>
     permission: testplugin.unfreeze
+  job:
+    description: Job related commands
+    usage: /job <list|join|leave>
+    permission: testplugin.job
 
 permissions:
   testplugin.balance.get.others:

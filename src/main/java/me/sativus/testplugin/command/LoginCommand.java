@@ -37,12 +37,12 @@ public class LoginCommand extends BaseCommand {
     private int executeLogin(CommandContext<CommandSourceStack> ctx) {
 
         Player player = (Player) ctx.getSource().getSender();
-        User user = userRepository.findByUUIDWithWallet(player.getUniqueId());
+        User user = userRepository.findByUUIDWithFetch(player.getUniqueId(), "wallet,");
 
         String password = StringArgumentType.getString(ctx, "password");
 
         if (user != null && user.getPassword() != null) {
-            if (user.getLoggedIn()) {
+            if (user.getLoggedIn() != null && user.getLoggedIn()) {
                 player.sendMessage("You are already logged in.");
                 return Command.SINGLE_SUCCESS;
             }
